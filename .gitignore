@@ -1,0 +1,48 @@
+# Python build artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+build/
+dist/
+.eggs/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Test / coverage caches
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# Notebooks
+*.ipynb_checkpoints/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*~
+
+# Secrets / local config
+.env
+.env.*
+!.env.example
+
+# Local data caches (if any are dropped here during development)
+data/
+results/
+
+# In-progress scientific-publication work — separate effort with its own
+# tooling/repo; not part of the ev-flow package.
+docs/Scientific publication/
+
+# Internal working docs kept on the local dev machine, not published.
+docs/
