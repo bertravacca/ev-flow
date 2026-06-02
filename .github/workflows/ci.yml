@@ -20,6 +20,10 @@ jobs:
           cache: pip
       - run: pip install -e ".[dev]"
       - run: ruff check .
+      # Generate the self-contained literature sales-mix CSVs the validator
+      # tests depend on (no network; built from in-code priors). data/ is
+      # gitignored, so this must run on a fresh checkout before pytest.
+      - run: python -m pev_synth.sales_mix_data build-sales-mix
       - run: pytest
 
   build:
