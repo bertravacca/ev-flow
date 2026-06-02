@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "ev-flow"
-version = "3.0.0"
+version = "3.0.1"
 description = "Synthetic plug-in electric vehicle charging dataset pipeline and library API."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -35,7 +35,7 @@ classifiers = [
 ]
 dependencies = [
     "numpy>=1.26",
-    "pandas>=2.2",
+    "pandas>=2.2,<3",
     "pyarrow>=16",
     "requests>=2.32",
     "scikit-learn>=1.4",
