@@ -710,7 +710,7 @@ def test_normalize_window_year_boundary() -> None:
     ``(2001-12-31, 2002-01-08)`` to ``(2001-12-31, 2001-01-08)``, which
     inverts the window. v2.0 raises ``ValueError`` telling the caller to
     split the window across the calendar boundary (see the "Inverted
-    post-remap window" note in docs/pev_synth_api.md), rather than the
+    post-remap window" note in the API reference), rather than the
     older behaviour of silently returning empty/garbage frames.
     """
     with pytest.raises(ValueError, match="inverts the requested window"):

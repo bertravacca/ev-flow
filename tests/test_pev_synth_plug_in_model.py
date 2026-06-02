@@ -636,7 +636,7 @@ def test_load_speech_k16_params_workplace() -> None:
     assert len(sp.P_G) == 16
     assert abs(sum(sp.P_G) - 1.0) < 1e-9
     # Workplace `work` segment has 13 weekday + 12 weekend present groups
-    # per the S1 conversion (see docs/v3/modeling/k16_speech.md).
+    # per the S1 conversion (see the SPEECh K16 modeling notes).
     assert len(sp.groups_present_weekday) >= 10
     assert len(sp.groups_present_weekend) >= 10
 

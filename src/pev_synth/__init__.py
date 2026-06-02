@@ -52,7 +52,7 @@ from .api import (
 # "workplace"]`` (``fleet_depot`` was de-scoped — plan §2.6).
 from .regions import REGIONS, Region, list_profile_types, list_regions
 
-__version__ = "3.0.0"
+__version__ = "3.0.1"
 
 __all__ = [
     "Fleet",
