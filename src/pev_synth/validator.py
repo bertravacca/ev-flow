@@ -2587,7 +2587,7 @@ def run(
     meta_for_checks: dict[str, Any] = {}
     meta_path = output_root / "meta.json"
     if meta_path.exists():
-        with meta_path.open() as f:
+        with meta_path.open(encoding="utf-8") as f:
             meta_for_checks = json.load(f)
 
     # RFC-008.r — the legacy ``energy_kwh`` alias is acceptable ONLY when
@@ -2862,10 +2862,10 @@ def run(
     # Write JSON + MD.
     json_path = output_root / "validation_report.json"
     md_path = output_root / "validation_report.md"
-    with json_path.open("w") as f:
+    with json_path.open("w", encoding="utf-8") as f:
         json.dump(report.to_dict(), f, indent=2, sort_keys=False, default=str)
         f.write("\n")
-    md_path.write_text(_emit_markdown(report) + "\n")
+    md_path.write_text(_emit_markdown(report) + "\n", encoding="utf-8")
 
     # Update meta.json with M9 provenance (idempotent — overwrites the
     # `validator` key only; keeps everything else byte-stable except for
@@ -2958,7 +2958,8 @@ def _run_with_replicates(
     # Re-emit the markdown with the aggregated (mean, std, n=R) columns.
     md_path = parent_root / "validation_report.md"
     md_path.write_text(
-        _emit_markdown(canonical, replicate_stats=replicate_stats, R=R) + "\n"
+        _emit_markdown(canonical, replicate_stats=replicate_stats, R=R) + "\n",
+        encoding="utf-8",
     )
     # Re-emit JSON with the replicate stats appended.
     aggregated = canonical.to_dict()
@@ -2968,7 +2969,7 @@ def _run_with_replicates(
     }
     aggregated["replicates"] = {"R": R, "n_dirs": len(replicate_dirs)}
     json_path = parent_root / "validation_report.json"
-    with json_path.open("w") as f:
+    with json_path.open("w", encoding="utf-8") as f:
         json.dump(aggregated, f, indent=2, sort_keys=False, default=str)
         f.write("\n")
 
@@ -2995,7 +2996,7 @@ def _update_meta_json(meta_path: Path, report: Report) -> None:
     :data:`MASTER_SEED`.
     """
     if meta_path.exists():
-        with meta_path.open() as f:
+        with meta_path.open(encoding="utf-8") as f:
             meta = json.load(f)
     else:
         meta = {}
@@ -3015,7 +3016,7 @@ def _update_meta_json(meta_path: Path, report: Report) -> None:
         "report_json": "validation_report.json",
         "report_md": "validation_report.md",
     }
-    with meta_path.open("w") as f:
+    with meta_path.open("w", encoding="utf-8") as f:
         json.dump(meta, f, indent=2, sort_keys=True)
         f.write("\n")
 

@@ -3,6 +3,20 @@
 All notable changes to **ev-flow** are documented here. This project follows
 [Semantic Versioning](https://semver.org).
 
+## [Unreleased]
+
+### Added
+- `py.typed` marker so downstream type checkers see ev-flow's type hints (PEP 561).
+- `ATTRIBUTION.md` documenting every upstream data source's license and the
+  required SPEECh (CC BY 4.0) and Census Data API notices; surfaced in the README.
+- `documentation/versioning.md` — the SemVer / deprecation / cache-compatibility policy.
+- CI now runs the full `{ubuntu, macos, windows} × {3.10, 3.11, 3.12, 3.13}` matrix; README CI/PyPI/license badges.
+
+### Fixed
+- Cross-platform correctness: UTF-8 encoding on JSON/Markdown report and `meta.json`
+  I/O (`validator`, `api`); OS-agnostic path assertions in the test suite so Windows
+  CI passes.
+
 ## [3.0.1] - 2026-06-02
 
 ### Fixed
