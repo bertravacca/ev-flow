@@ -1,5 +1,10 @@
 # ev-flow
 
+[![CI](https://github.com/bertravacca/ev-flow/actions/workflows/ci.yml/badge.svg)](https://github.com/bertravacca/ev-flow/actions/workflows/ci.yml)
+[![PyPI version](https://img.shields.io/pypi/v/ev-flow.svg)](https://pypi.org/project/ev-flow/)
+[![Python versions](https://img.shields.io/pypi/pyversions/ev-flow.svg)](https://pypi.org/project/ev-flow/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 Synthetic plug-in electric vehicle (PEV) charging dataset pipeline and library API.
 
 `ev-flow` generates realistic, fleet-scale charging behavior for residential and workplace EVs, grounded in the National Household Travel Survey (NHTS) and a regional sales-mix model. It exposes both a low-level pipeline (NHTS loading, donor matching, travel-week building, plug-in modeling, state-of-charge trajectory, hourly rasterisation) and a clean `Fleet` / `Profile` library API for downstream studies.
@@ -97,6 +102,29 @@ pip install -e ".[dev]"
 pytest
 ```
 
+## Versioning
+
+`ev-flow` follows [Semantic Versioning](https://semver.org). See
+[`documentation/versioning.md`](documentation/versioning.md) for what counts as
+a major/minor/patch change, the deprecation policy, and the distinction between
+the package version and a cache's `methodology_version`.
+
+## Data sources & attribution
+
+`ev-flow` is grounded in public data sources. Two upstream notices are required:
+
+- **SPEECh Original Model** (Powell, Cezar & Rajagopal, Mendeley Data, 2021) is
+  licensed **CC BY 4.0**. ev-flow consumes a modified (pickle→JSON, reweighted)
+  subset of its driver-group mixtures. <https://doi.org/10.17632/gvk34mybtb.1>
+- This product uses the **U.S. Census Bureau Data API** but is not endorsed or
+  certified by the Census Bureau.
+
+Full per-source licensing, citations, and the modification statement are in
+[`ATTRIBUTION.md`](ATTRIBUTION.md) (NHTS, Census ACS PUMS, EPA fueleconomy.gov,
+EV WATTS, CVRP, NYSERDA, Argonne EV-FACTS, NOAA, NREL).
+
 ## License
 
-MIT. See `LICENSE`.
+MIT. See `LICENSE`. Note that the MIT license covers the `ev-flow` *code*; the
+upstream data sources retain their own licenses — see
+[`ATTRIBUTION.md`](ATTRIBUTION.md).

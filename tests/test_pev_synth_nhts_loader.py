@@ -405,4 +405,5 @@ def test_cli_repo_root_default_resolves_to_repo() -> None:
     # The default cache dir must resolve under repo_root, not under cwd.
     default_cache = repo_root / DEFAULT_CACHE_REL
     assert default_cache.is_absolute()
-    assert str(default_cache).endswith("data/pev/raw/nhts2017")
+    # as_posix() so the suffix check is OS-agnostic (Windows uses backslashes).
+    assert default_cache.as_posix().endswith("data/pev/raw/nhts2017")

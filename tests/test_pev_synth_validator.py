@@ -145,7 +145,7 @@ def test_validation_report_schema_complete(report_dict: dict) -> None:
     # Companion markdown exists.
     md_path = OUTPUT_ROOT / "validation_report.md"
     assert md_path.exists()
-    text = md_path.read_text()
+    text = md_path.read_text(encoding="utf-8")
     assert "M9 validation report" in text
     # Every check_id appears as a row.
     for cid in EXPECTED_CHECK_IDS:
