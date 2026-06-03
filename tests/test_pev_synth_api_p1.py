@@ -58,8 +58,10 @@ def _write_fleet_parquet(target: Path) -> None:
 def test_fleet_load_requires_meta_json(tmp_path: Path) -> None:
     _write_fleet_parquet(tmp_path)
 
-    # No meta.json present -> FileNotFoundError naming the path.
-    with pytest.raises(FileNotFoundError, match=str(tmp_path / "meta.json")):
+    # No meta.json present -> FileNotFoundError naming the path. Match on the
+    # bare filename: on Windows the full tmp_path contains backslashes that are
+    # invalid regex escapes for pytest.raises' re.search-based `match`.
+    with pytest.raises(FileNotFoundError, match="meta.json"):
         ps.Fleet.load(tmp_path)
 
     # meta.json missing 'profile_type' -> ValueError("profile_type").

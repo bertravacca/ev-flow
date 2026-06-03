@@ -1471,7 +1471,7 @@ class Fleet:
             "api_version": _api_version,
             "storage_timezone": _STORAGE_TZ,
         }
-        with (target / "meta.json").open("w") as f:
+        with (target / "meta.json").open("w", encoding="utf-8") as f:
             json.dump(meta_out, f, indent=2, default=str)
 
         return target
@@ -1700,7 +1700,7 @@ def generate_profiles(
     meta: dict[str, Any] = {}
     if meta_file.exists():
         try:
-            with meta_file.open() as f:
+            with meta_file.open(encoding="utf-8") as f:
                 meta = json.load(f)
         except json.JSONDecodeError:
             meta = {}

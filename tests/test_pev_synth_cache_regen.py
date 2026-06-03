@@ -67,7 +67,9 @@ def test_coerce_for_json_handles_numpy_and_nan() -> None:
     assert blob["nan"] is None
     assert blob["arr"] == [1, 2, 3]
     assert isinstance(blob["nested"]["v"], float)
-    assert blob["path"] == "/tmp/abc"
+    # str(Path(...)) round-trip so the assertion is OS-agnostic (Windows uses
+    # backslash separators), matching cache_regen._coerce_for_json's str(Path).
+    assert blob["path"] == str(Path("/tmp/abc"))
 
 
 # ---------------------------------------------------------------------------

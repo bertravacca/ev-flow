@@ -73,6 +73,8 @@ only-include = [
     "src/pev_synth",
     "README.md",
     "LICENSE",
+    "ATTRIBUTION.md",
+    "CHANGELOG.md",
     "pyproject.toml",
 ]
 
