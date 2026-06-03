@@ -1498,7 +1498,7 @@ class Fleet:
                 f"meta.json is required to load a Fleet bundle; "
                 f"expected at {meta_file}"
             )
-        with meta_file.open() as f:
+        with meta_file.open(encoding="utf-8") as f:
             meta = json.load(f)
         profile_type = meta.get("profile_type")
         if not isinstance(profile_type, str) or not profile_type:
