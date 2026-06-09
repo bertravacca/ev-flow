@@ -50,6 +50,8 @@ dev = [
     "ruff>=0.5",
     "build>=1.2",
     "twine>=5",
+    "bandit>=1.7",
+    "pip-audit>=2.7",
 ]
 
 [project.urls]
