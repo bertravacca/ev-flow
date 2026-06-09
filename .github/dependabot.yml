@@ -1,0 +1,32 @@
+# Dependabot version updates (F31). Security *updates* (auto-PRs for vulnerable
+# deps) and the underlying alerts are enabled separately on the repo via the
+# API; this file governs routine version-bump PRs.
+version: 2
+updates:
+  # Python dependencies declared in pyproject.toml (runtime + dev extras).
+  # Minor/patch bumps are grouped into a single weekly PR to cut noise; major
+  # bumps arrive as individual PRs since they may be breaking.
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    groups:
+      python-minor-patch:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+    labels: ["dependencies"]
+    commit-message:
+      prefix: "deps"
+
+  # Pin/refresh the GitHub Actions used by the CI and publish workflows.
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    groups:
+      actions:
+        patterns: ["*"]
+    labels: ["dependencies", "github-actions"]
+    commit-message:
+      prefix: "ci"

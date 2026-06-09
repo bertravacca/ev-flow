@@ -2,6 +2,7 @@
 
 [![CI](https://github.com/bertravacca/ev-flow/actions/workflows/ci.yml/badge.svg)](https://github.com/bertravacca/ev-flow/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/bertravacca/ev-flow/branch/main/graph/badge.svg)](https://codecov.io/gh/bertravacca/ev-flow)
+[![security](https://github.com/bertravacca/ev-flow/actions/workflows/security.yml/badge.svg)](https://github.com/bertravacca/ev-flow/actions/workflows/security.yml)
 [![PyPI version](https://img.shields.io/pypi/v/ev-flow.svg)](https://pypi.org/project/ev-flow/)
 [![Python versions](https://img.shields.io/pypi/pyversions/ev-flow.svg)](https://pypi.org/project/ev-flow/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
