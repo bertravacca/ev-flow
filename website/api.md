@@ -76,6 +76,19 @@ ps.REGIONS['bay_area'].tz          # 'America/Los_Angeles'
 ps.Region.from_name('seattle').display_name   # 'Seattle + Portland'
 ```
 
+## Plotting
+
+Optional [matplotlib](https://matplotlib.org/) helpers for visualising fleet
+output, in the `pev_synth.plotting` submodule. They are kept separate from the
+core package so plain `import pev_synth` has no matplotlib dependency — install
+the extra with `pip install ev-flow[plotting]`, then
+`from pev_synth import plotting`.
+
+::: pev_synth.plotting
+    options:
+      show_root_heading: true
+      show_root_toc_entry: true
+
 ## Type aliases
 
 ::: pev_synth.ProfileType
