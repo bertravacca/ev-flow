@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "ev-flow"
-version = "3.0.1"
+version = "3.0.2"
 description = "Synthetic plug-in electric vehicle charging dataset pipeline and library API."
 readme = "README.md"
 requires-python = ">=3.10"

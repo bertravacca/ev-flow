@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+message: "If you use ev-flow in your research, please cite it as below."
+type: software
+title: "ev-flow: synthetic plug-in electric vehicle charging data"
+abstract: >-
+  ev-flow generates synthetic plug-in electric vehicle charging behaviour
+  grounded in NHTS 2017 travel micro-data and a regional vehicle sales-mix
+  model. It is distributed on PyPI as "ev-flow" and imported in Python as
+  "pev_synth".
+authors:
+  - given-names: Bertrand
+    family-names: Travacca
+    orcid: "https://orcid.org/0000-0001-7167-7455"
+    email: bertrand.travacca@gmail.com
+license: MIT
+repository-code: "https://github.com/bertravacca/ev-flow"
+url: "https://github.com/bertravacca/ev-flow"
+keywords:
+  - electric vehicles
+  - EV charging
+  - synthetic data
+  - energy
+  - power grid
+  - NHTS
+# A Zenodo concept DOI (version-independent) will be added here once the first
+# GitHub release is archived by the Zenodo–GitHub integration.

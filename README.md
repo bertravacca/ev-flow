@@ -5,6 +5,7 @@
 [![security](https://github.com/bertravacca/ev-flow/actions/workflows/security.yml/badge.svg)](https://github.com/bertravacca/ev-flow/actions/workflows/security.yml)
 [![PyPI version](https://img.shields.io/pypi/v/ev-flow.svg)](https://pypi.org/project/ev-flow/)
 [![Python versions](https://img.shields.io/pypi/pyversions/ev-flow.svg)](https://pypi.org/project/ev-flow/)
+[![DOI](https://zenodo.org/badge/1245084094.svg)](https://zenodo.org/badge/latestdoi/1245084094)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 Synthetic plug-in electric vehicle (PEV) charging dataset pipeline and library API.
