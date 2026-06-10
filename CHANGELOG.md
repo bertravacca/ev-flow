@@ -3,19 +3,22 @@
 All notable changes to **ev-flow** are documented here. This project follows
 [Semantic Versioning](https://semver.org).
 
-## [Unreleased]
+## [3.0.2] - 2026-06-09
 
 ### Added
-- `py.typed` marker so downstream type checkers see ev-flow's type hints (PEP 561).
-- `ATTRIBUTION.md` documenting every upstream data source's license and the
-  required SPEECh (CC BY 4.0) and Census Data API notices; surfaced in the README.
-- `documentation/versioning.md` — the SemVer / deprecation / cache-compatibility policy.
-- CI now runs the full `{ubuntu, macos, windows} × {3.10, 3.11, 3.12, 3.13}` matrix; README CI/PyPI/license badges.
+- The PEP 561 `py.typed` marker now ships inside the `pev_synth` wheel, so
+  downstream type checkers (mypy, pyright) pick up ev-flow's inline type hints
+  when the package is installed from PyPI.
+- `ATTRIBUTION.md` is now included in the source distribution, documenting every
+  upstream data source's license and the required SPEECh (CC BY 4.0) and U.S.
+  Census Bureau Data API notices.
 
 ### Fixed
-- Cross-platform correctness: UTF-8 encoding on JSON/Markdown report and `meta.json`
-  I/O (`validator`, `api`); OS-agnostic path assertions in the test suite so Windows
-  CI passes.
+- Cross-platform correctness: all `meta.json`, `validation_report.json`, and
+  `validation_report.md` reads and writes in `api` and `validator` now pass an
+  explicit `encoding="utf-8"`, instead of relying on the platform default
+  encoding. This makes bundle metadata and validation reports round-trip
+  identically on Windows (where the default was previously `cp1252`).
 
 ## [3.0.1] - 2026-06-02
 
@@ -34,5 +37,6 @@ All notable changes to **ev-flow** are documented here. This project follows
   sales-mix model across 8 US regions.
 - PyPI distribution name `ev-flow`; Python import name `pev_synth`.
 
+[3.0.2]: https://github.com/bertravacca/ev-flow/releases/tag/v3.0.2
 [3.0.1]: https://github.com/bertravacca/ev-flow/releases/tag/v3.0.1
 [3.0.0]: https://github.com/bertravacca/ev-flow/releases/tag/v3.0.0
