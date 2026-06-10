@@ -259,6 +259,7 @@ def test_bootstrap_full_run_offline_steps_only(
     # Stub the heavy pipeline: return a PASS result dict like regenerate_cache.
     def fake_regen(region_name, profile_type, **kwargs):
         calls.setdefault("regen", []).append((region_name, profile_type))
+        calls["regen_kwargs"] = kwargs
         return {
             "region": region_name,
             "profile_type": profile_type,
@@ -280,6 +281,9 @@ def test_bootstrap_full_run_offline_steps_only(
     # The (faked) NHTS and cache steps were invoked.
     assert "nhts" in calls
     assert calls.get("regen") == [("bay_area", "residential")]
+    # --n was forwarded; --seed was NOT (so regenerate_cache keeps its
+    # deterministic MASTER_SEED default instead of receiving seed=None).
+    assert calls["regen_kwargs"] == {"n": 10}
     assert "Bootstrap complete" in out
 
 

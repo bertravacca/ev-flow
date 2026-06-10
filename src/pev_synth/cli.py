@@ -286,6 +286,15 @@ def _bootstrap(args: argparse.Namespace) -> int:
     from ._paths import cache_dir as _cache_dir
     from .cache_regen import regenerate_cache
 
+    # Only forward --seed / --n when the user set them, so regenerate_cache's
+    # own defaults (the pipeline MASTER_SEED; per-region N) apply otherwise.
+    # Passing seed=None would override the deterministic default with None.
+    regen_kwargs: dict[str, int] = {}
+    if args.seed is not None:
+        regen_kwargs["seed"] = args.seed
+    if args.n is not None:
+        regen_kwargs["n"] = args.n
+
     for region_name, profile_type in pairs:
         cdir = _cache_dir(region_name, profile_type)
         if _cache_complete(cdir):
@@ -296,8 +305,7 @@ def _bootstrap(args: argparse.Namespace) -> int:
         res = regenerate_cache(
             region_name,
             profile_type,
-            n=args.n,
-            seed=args.seed,
+            **regen_kwargs,
         )
         if res.get("status") != "PASS":
             err = res.get("error", "unknown error")
