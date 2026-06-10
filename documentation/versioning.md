@@ -4,7 +4,7 @@
 distribution is `ev-flow`; the import package is `pev_synth`. Two version
 numbers coexist and must not be conflated:
 
-- **Package version** — `pev_synth.__version__` (currently `3.0.1`) and the
+- **Package version** — `pev_synth.__version__` (currently `3.0.2`) and the
   `version` field in `pyproject.toml`, kept in sync. Governs the public
   Python API and wheel contents. This is the SemVer number a `vX.Y.Z` tag
   releases.
