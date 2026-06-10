@@ -355,11 +355,17 @@ def regenerate_cache(
         )
 
         # --- Step 6: M7 plug-status rasteriser --------------------------
+        # Pass ``out_dir`` explicitly so the rasters land in the SAME
+        # directory as the M2–M6 artifacts. ``out_dir`` already honours
+        # ``data_root()`` / ``PEV_SYNTH_DATA_ROOT`` and the
+        # ``replicates/r{id}/`` leaf for ``r_total > 1``; deriving M7's
+        # output from ``repo_root`` instead would ignore the data-root
+        # override and split the cache across two trees.
         t0 = time.time()
         raster_paths = build_plug_status(
             sessions_path=sess_path, region=region,
             profile_type=profile_type, seed=seed, n_vehicles=n_eff,
-            repo_root=repo_root,
+            repo_root=repo_root, out_dir=out_dir,
         )
         timings["m7_raster"] = time.time() - t0
 

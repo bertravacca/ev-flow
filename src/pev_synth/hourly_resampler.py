@@ -568,6 +568,7 @@ def build_plug_status(
     seed: int = MASTER_SEED_DEFAULT,
     n_vehicles: int = N_VEHICLES_DEFAULT,
     repo_root: Path | None = None,
+    out_dir: Path | None = None,
 ) -> dict[str, Path]:
     """v2.0 public API for the M7 rasteriser.
 
@@ -595,9 +596,20 @@ def build_plug_status(
     n_vehicles:
         Number of EVs to materialise rows for (default 1000).
     repo_root:
-        Optional override. When provided, output paths are resolved
-        from the canonical v2 layout under this repo root rather than
-        ``sessions_path``'s parent.
+        Optional override for the *canonical repo layout* used to derive
+        output paths when ``out_dir`` is not supplied. Note that this
+        derives ``<repo_root>/data/pev/processed/...`` directly and does
+        **not** consult ``PEV_SYNTH_DATA_ROOT``; callers that honour a
+        data-root override (e.g. ``cache_regen``) should pass ``out_dir``
+        explicitly instead so the rasters land in the same directory as
+        the M2–M6 artifacts.
+    out_dir:
+        Optional explicit output directory. When provided it takes
+        precedence over ``repo_root`` for the two plug-status parquets and
+        ``meta.json`` — they are written directly under ``out_dir``. This
+        is the data-root-honouring path the orchestrator already computed
+        (and includes the ``replicates/r{id}/`` leaf when ``r_total > 1``),
+        guaranteeing the M7 rasters co-locate with ``sessions.parquet``.
 
     Returns
     -------
@@ -610,7 +622,17 @@ def build_plug_status(
             f"profile_type must be one of {_PROFILE_TYPES_V2}; got {profile_type!r}"
         )
     sp = Path(sessions_path)
-    if repo_root is not None:
+    if out_dir is not None:
+        # Explicit output directory wins: write the rasters + meta here,
+        # keeping the caller-provided ``sessions_path`` for reading.
+        base = Path(out_dir)
+        paths = M7Paths(
+            sessions_in=sp,
+            plug_status_15min_out=base / "plug_status_15min.parquet",
+            plug_status_hourly_out=base / "plug_status_hourly.parquet",
+            meta_out=base / "meta.json",
+        )
+    elif repo_root is not None:
         paths = resolve_v2_paths(Path(repo_root), region, profile_type)
         # Allow caller to point at a different sessions parquet by
         # passing sessions_path explicitly; otherwise use the canonical
