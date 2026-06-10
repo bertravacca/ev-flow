@@ -54,6 +54,9 @@ dev = [
     "pip-audit>=2.7",
 ]
 
+[project.scripts]
+ev-flow = "pev_synth.cli:main"
+
 [project.urls]
 Homepage = "https://github.com/bertravacca/ev-flow"
 Repository = "https://github.com/bertravacca/ev-flow"
