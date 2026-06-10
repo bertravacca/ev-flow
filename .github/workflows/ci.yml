@@ -37,6 +37,20 @@ jobs:
           files: ./coverage.xml
           fail_ci_if_error: false
 
+  typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -e ".[dev]"
+      # mypy reads its config (target, strict, files, per-module overrides)
+      # from [tool.mypy] in pyproject.toml: strict on the public API surface,
+      # relaxed on the heavy internal pipeline modules (F27, gradual typing).
+      - run: mypy
+
   build:
     runs-on: ubuntu-latest
     steps:
