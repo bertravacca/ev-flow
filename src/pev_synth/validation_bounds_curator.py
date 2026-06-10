@@ -361,7 +361,10 @@ def _write_parquet(table: pa.Table, path: Path) -> None:
     timestamp, sorted columns by schema order, fixed row-group size).
     """
 
-    pq.write_table(
+    # pyarrow.parquet.write_table is annotation-free in pyarrow's bundled
+    # stubs, so mypy flags the call as untyped (this module is otherwise
+    # strict-clean).
+    pq.write_table(  # type: ignore[no-untyped-call]
         table,
         path,
         compression="snappy",
@@ -2714,7 +2717,7 @@ def _table_to_parquet_bytes(table: pa.Table) -> bytes:
     import io  # noqa: PLC0415
 
     buf = io.BytesIO()
-    pq.write_table(
+    pq.write_table(  # type: ignore[no-untyped-call]
         table,
         buf,
         compression="snappy",

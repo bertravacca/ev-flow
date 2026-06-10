@@ -50,7 +50,7 @@ import sys
 from dataclasses import dataclass
 from datetime import date
 from pathlib import Path
-from typing import Final
+from typing import Final, TypedDict
 
 import numpy as np
 import pandas as pd
@@ -137,6 +137,21 @@ _DEFAULT_COHORT_DIR: Final[Path] = _raw_root() / "evwatts_cohorts"
 _DEFAULT_EVWATTS_VEHICLES: Final[Path] = _raw_root() / "evwatts.public.vehicles.csv"
 _DEFAULT_EVWATTS_SESSIONS: Final[Path] = _raw_root() / "evwatts.public.vehiclesessions.csv"
 
+
+class _EVWattsCalibratedKwargs(TypedDict):
+    """Keyword overrides for :func:`build_workplace_cohort` (public preset).
+
+    A TypedDict (rather than ``dict[str, object]``) so the precise per-key
+    types survive ``**``-unpacking into the typed keyword parameters.
+    """
+
+    min_sessions_yr: int
+    plug_in_hour_range: tuple[int, int]
+    plug_out_hour_range: tuple[int, int]
+    duration_h_range: tuple[float, float]
+    avg_kw_range: tuple[float, float]
+
+
 #: Public-EVWatts calibrated cohort filter parameters.
 #:
 #: Plan §4.4.2 specifies a strict workplace cohort filter (pi 7-11 LT, po 15-19
@@ -170,7 +185,7 @@ _DEFAULT_EVWATTS_SESSIONS: Final[Path] = _raw_root() / "evwatts.public.vehiclese
 #:    sessions are typically 1-3 h rather than the workplace-canonical 4-8 h.
 #:  - ``avg_kw_range=(2.0, 15.0)``: widened to allow Level-1 (1.4 kW residual)
 #:    and Level-2 limit (11.5 kW) plus 19.2 kW high-power L2.
-_PUBLIC_EVWATTS_CALIBRATED: Final[dict[str, object]] = {
+_PUBLIC_EVWATTS_CALIBRATED: Final[_EVWattsCalibratedKwargs] = {
     "min_sessions_yr": 50,
     "plug_in_hour_range": (5, 14),
     "plug_out_hour_range": (10, 22),

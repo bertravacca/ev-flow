@@ -287,7 +287,7 @@ def _process_hh(df_raw: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-def _process_per(df_raw: pd.DataFrame, hh_houseids: set) -> pd.DataFrame:
+def _process_per(df_raw: pd.DataFrame, hh_houseids: set[object]) -> pd.DataFrame:
     """Normalise person table.
 
     * Lowercase columns; rename ``r_sex_imp`` → ``r_sex`` (Scientist S2 §3.2).
@@ -310,7 +310,7 @@ def _process_per(df_raw: pd.DataFrame, hh_houseids: set) -> pd.DataFrame:
     return df
 
 
-def _process_veh(df_raw: pd.DataFrame, hh_houseids: set) -> pd.DataFrame:
+def _process_veh(df_raw: pd.DataFrame, hh_houseids: set[object]) -> pd.DataFrame:
     """Normalise vehicle table.
 
     * Lowercase columns.
@@ -342,7 +342,7 @@ def _process_veh(df_raw: pd.DataFrame, hh_houseids: set) -> pd.DataFrame:
     return df
 
 
-def _process_trip(df_raw: pd.DataFrame, hh_houseids: set) -> pd.DataFrame:
+def _process_trip(df_raw: pd.DataFrame, hh_houseids: set[object]) -> pd.DataFrame:
     """Normalise trip table.
 
     * Lowercase columns; rename ``dwell_time`` → ``dwell_min`` (Scientist
@@ -389,7 +389,8 @@ def _outputs_exist(cache_dir: Path) -> bool:
 
 def _read_manifest(cache_dir: Path) -> dict[str, Any]:
     with (cache_dir / NHTS_NEXTGEN_MANIFEST_BASENAME).open("r", encoding="utf-8") as fh:
-        return json.load(fh)
+        manifest: dict[str, Any] = json.load(fh)
+    return manifest
 
 
 def _load_cached(cache_dir: Path) -> NHTSNextGenData:

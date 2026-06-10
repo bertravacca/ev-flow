@@ -1416,7 +1416,12 @@ class Fleet:
                 "`pip install -e <path/to/pev_optim>`."
             ) from exc
 
-        return _impl(self, ev_ids=ev_ids, t_start=t_start, t_stop=t_stop)
+        # `_impl` comes from the untyped sibling package `pev_optim`, so its
+        # return is `Any`; pin it to this method's declared contract.
+        result: dict[int, dict[str, Any]] = _impl(
+            self, ev_ids=ev_ids, t_start=t_start, t_stop=t_stop
+        )
+        return result
 
     # ---------------- save / load ---------------- #
 

@@ -28,8 +28,14 @@ import argparse
 import importlib
 import os
 import sys
+from typing import TYPE_CHECKING, TypedDict
 
 from . import __version__
+
+if TYPE_CHECKING:
+    # Annotation-only import: keeps the module-level runtime imports stdlib-
+    # minimal (see "Why lazy imports" above) while letting mypy resolve Path.
+    from pathlib import Path
 
 # --------------------------------------------------------------------------- #
 # Module-level constants (stdlib-only; no third-party imports up here).
@@ -115,14 +121,14 @@ def _try_import(mod_name: str) -> tuple[bool, str]:
     return True, f"v{ver}"
 
 
-def _sales_mix_dir():  # -> Path
+def _sales_mix_dir() -> Path:
     """Directory holding the three sales-mix CSVs (honours PEV_SYNTH_DATA_ROOT)."""
     from ._paths import raw_root
 
     return raw_root() / "literature" / "sales_mix"
 
 
-def _nhts_dir():  # -> Path
+def _nhts_dir() -> Path:
     """Directory the NHTS 2017 CA parquets live in.
 
     Anchored at ``repo_root()/data/pev/raw/nhts2017`` to match exactly where
@@ -135,7 +141,7 @@ def _nhts_dir():  # -> Path
     return repo_root() / "data" / "pev" / "raw" / "nhts2017"
 
 
-def _cache_complete(cache_dir) -> bool:
+def _cache_complete(cache_dir: Path) -> bool:
     """True iff ``cache_dir`` holds every artifact in :data:`CACHE_ARTIFACTS`
     and ``meta.json`` parses as JSON."""
     import json
@@ -165,7 +171,7 @@ def _nhts_present() -> bool:
     return (d / NHTS_MANIFEST_BASENAME).is_file()
 
 
-def _is_writable(path) -> bool:
+def _is_writable(path: str | os.PathLike[str]) -> bool:
     """Whether ``path`` (an existing dir, or its nearest existing ancestor) is
     writable. Used by doctor's data-root check without mutating anything."""
     from pathlib import Path
@@ -289,7 +295,13 @@ def _bootstrap(args: argparse.Namespace) -> int:
     # Only forward --seed / --n when the user set them, so regenerate_cache's
     # own defaults (the pipeline MASTER_SEED; per-region N) apply otherwise.
     # Passing seed=None would override the deterministic default with None.
-    regen_kwargs: dict[str, int] = {}
+    # A TypedDict (total=False) keeps the **-unpack type-exact against the
+    # keyword-only `seed: int` / `n: int | None` parameters.
+    class _RegenKwargs(TypedDict, total=False):
+        seed: int
+        n: int
+
+    regen_kwargs: _RegenKwargs = {}
     if args.seed is not None:
         regen_kwargs["seed"] = args.seed
     if args.n is not None:

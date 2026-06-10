@@ -51,6 +51,7 @@ dev = [
     "pytest>=8",
     "pytest-cov>=5",
     "ruff>=0.5",
+    "mypy>=1.10",
     "build>=1.2",
     "twine>=5",
     "bandit>=1.7",
@@ -99,3 +100,54 @@ target-version = "py310"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "B", "UP"]
+
+# --- mypy static type-checking ---------------------------------------------
+# The package ships a `py.typed` marker, so downstream users get our types.
+# CI runs `mypy` (reading this config) as a required gate. The policy is:
+# the public / lightweight surface is strict-clean; the heavy internal
+# pipeline modules are relaxed for now (gradual typing — tracked for a later
+# pass, see the per-module overrides below).
+[tool.mypy]
+python_version = "3.10"
+strict = true
+files = ["src/pev_synth"]
+# Several runtime deps (pandas, scipy, scikit-learn, pytz, matplotlib) do not
+# ship a `py.typed` marker, so mypy cannot find inline types for them. Rather
+# than vendor third-party stub packages (pandas-stubs et al. are strict and
+# would drown the heavy modules in churn), we treat these libraries as
+# untyped at the import boundary. Our own code stays strictly checked.
+[[tool.mypy.overrides]]
+module = [
+    "pandas.*",
+    "scipy.*",
+    "sklearn.*",
+    "pytz.*",
+    "matplotlib.*",
+    # Optional downstream consumer used only inside a guarded, lazy import in
+    # api.py (pev-optim is not a dependency of ev-flow).
+    "pev_optim.*",
+]
+ignore_missing_imports = true
+
+# Heavy internal pipeline modules (M1..M9 implementation) are not strict-clean
+# yet. They are excluded from strict enforcement as a deliberate gradual-typing
+# step for the v4 launch and tracked for a follow-up pass (F27). Everything NOT
+# listed below stays strict and must remain clean — that is the whole public
+# API surface plus the lighter helpers and loaders (api, regions, __init__,
+# _paths, cli, plotting, _seeds, _meta, _phev_fuel_economy, _utc_migration,
+# sales_mix_data, acs_loader, nhts_loader, nhts_nextgen_loader, soc_trajectory,
+# validation_bounds_curator).
+#
+# NOTE: cache_regen and hourly_resampler are relaxed here as well; they are
+# being actively refactored in parallel and are not safe to retype right now.
+[[tool.mypy.overrides]]
+module = [
+    "pev_synth.donor_matcher",
+    "pev_synth.travel_week_builder",
+    "pev_synth.vehicle_archetypes",
+    "pev_synth.plug_in_model",
+    "pev_synth.validator",
+    "pev_synth.cache_regen",
+    "pev_synth.hourly_resampler",
+]
+ignore_errors = true
