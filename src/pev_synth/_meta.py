@@ -112,7 +112,8 @@ def load_meta(meta_path: str | os.PathLike[str]) -> dict[str, Any]:
     if not p.is_file():
         return {}
     with p.open("r", encoding="utf-8") as fh:
-        return json.load(fh)
+        data: dict[str, Any] = json.load(fh)
+    return data
 
 
 def write_meta_atomic(

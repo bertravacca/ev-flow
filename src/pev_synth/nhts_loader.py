@@ -460,7 +460,8 @@ def _outputs_exist(cache_dir: Path) -> bool:
 
 def _read_manifest(cache_dir: Path) -> dict[str, Any]:
     with (cache_dir / MANIFEST_BASENAME).open("r", encoding="utf-8") as fh:
-        return json.load(fh)
+        manifest: dict[str, Any] = json.load(fh)
+    return manifest
 
 
 def _load_cached(cache_dir: Path) -> NHTSData:

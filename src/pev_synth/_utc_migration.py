@@ -178,7 +178,9 @@ def _write_parquet_deterministic(df: pd.DataFrame, path: Path) -> None:
     """
     path.parent.mkdir(parents=True, exist_ok=True)
     table = pa.Table.from_pandas(df, preserve_index=False)
-    pq.write_table(
+    # pyarrow.parquet.write_table is annotation-free in pyarrow's bundled
+    # stubs, so mypy flags the call as untyped; the wrapper itself is typed.
+    pq.write_table(  # type: ignore[no-untyped-call]
         table,
         where=path,
         compression="snappy",

@@ -3,6 +3,16 @@
 All notable changes to **ev-flow** are documented here. This project follows
 [Semantic Versioning](https://semver.org).
 
+## [Unreleased]
+
+### Added
+- Static type-checking with **mypy** is now a required CI gate (F27). The
+  public API surface and lighter helpers/loaders are checked under
+  `mypy --strict`; the heavy internal pipeline modules are relaxed for now as
+  a deliberate gradual-typing step (tracked for a follow-up pass). Config lives
+  under `[tool.mypy]` in `pyproject.toml`; `mypy>=1.10` was added to the `dev`
+  extra. This is a repo/CI-only change — it does not affect the published wheel.
+
 ## [3.0.2] - 2026-06-09
 
 ### Added
