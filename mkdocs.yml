@@ -1,0 +1,97 @@
+site_name: ev-flow
+site_description: >-
+  Synthetic plug-in electric vehicle charging data grounded in NHTS 2017 travel
+  micro-data and a regional vehicle sales-mix model.
+site_author: Bertrand Travacca
+site_url: https://bertravacca.github.io/ev-flow/
+
+repo_name: bertravacca/ev-flow
+repo_url: https://github.com/bertravacca/ev-flow
+edit_uri: ""
+
+# The published documentation source lives in website/ (NOT docs/ — that
+# directory is gitignored maintainer working notes and is never part of the
+# site).
+docs_dir: website
+
+theme:
+  name: material
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.top
+    - navigation.sections
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.code.annotate
+    - toc.follow
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: green
+      accent: teal
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: green
+      accent: teal
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  icon:
+    repo: fontawesome/brands/github
+
+plugins:
+  - search
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          options:
+            docstring_style: numpy
+            show_source: true
+            show_root_heading: true
+            show_root_full_path: false
+            show_symbol_type_heading: true
+            show_symbol_type_toc: true
+            show_if_no_docstring: false
+            members_order: source
+            separate_signature: true
+            show_signature_annotations: true
+            signature_crossrefs: true
+            merge_init_into_class: true
+            filters:
+              - "!^_"
+            docstring_section_style: table
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.details
+
+nav:
+  - Home: index.md
+  - Quickstart: quickstart.md
+  - API Reference: api.md
+  - Migration: migration.md
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/bertravacca/ev-flow
+    - icon: fontawesome/brands/python
+      link: https://pypi.org/project/ev-flow/
