@@ -46,3 +46,6 @@ docs/Scientific publication/
 
 # Internal working docs kept on the local dev machine, not published.
 docs/
+
+# MkDocs build output (the published site is built by CI from website/).
+site/
