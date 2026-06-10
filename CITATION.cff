@@ -22,5 +22,6 @@ keywords:
   - energy
   - power grid
   - NHTS
-# A Zenodo concept DOI (version-independent) will be added here once the first
-# GitHub release is archived by the Zenodo–GitHub integration.
+# Zenodo concept DOI — version-independent; always resolves to the latest
+# archived release. (The version-specific DOI for 3.0.2 is 10.5281/zenodo.20619157.)
+doi: 10.5281/zenodo.20619156
