@@ -42,6 +42,10 @@ jobs:
         with:
           python-version: "3.12"
           cache: pip
+      # Keep the build toolchain current so an advisory in the runner's
+      # preinstalled pip/setuptools (not an ev-flow dependency) doesn't red the
+      # audit — remediate by upgrading rather than suppressing.
+      - run: python -m pip install --upgrade pip setuptools wheel
       # Install only the runtime closure (no dev extras) so the audit reflects
       # exactly what `pip install ev-flow` exposes to users.
       - run: pip install .
