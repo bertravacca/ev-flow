@@ -86,6 +86,10 @@ markdown_extensions:
 nav:
   - Home: index.md
   - Quickstart: quickstart.md
+  - Tutorials:
+      - Residential aggregate load: tutorials/residential-load.md
+      - Comparing regions: tutorials/regional-comparison.md
+      - Save and reload a fleet: tutorials/save-reload.md
   - API Reference: api.md
   - Migration: migration.md
 
