@@ -18,7 +18,48 @@ Synthetic plug-in electric vehicle (PEV) charging dataset pipeline and library A
 pip install ev-flow
 ```
 
-Then set `PEV_SYNTH_DATA_ROOT` to point at your data tree — see the next section. Without that step, `generate_profiles(...)` will raise `FileNotFoundError` because the wheel does not bundle the cached fleet bundles.
+The wheel ships only the Python package — no cached fleet bundles and no NHTS microdata. After installing, run the one-time **First run** below to build them (or point `PEV_SYNTH_DATA_ROOT` at a prebuilt data tree). Until then `generate_profiles(...)` raises `FileNotFoundError`.
+
+## First run
+
+`ev-flow` installs a console command, `ev-flow`, with two subcommands:
+
+- **`ev-flow bootstrap`** — one-time setup: writes the offline sales-mix CSVs, downloads the NHTS 2017 microdata (**~80 MB ORNL zip**), and builds the cached fleet bundle for the region(s) you ask for. It runs the full M1–M9 pipeline, so the first run takes **a few minutes**. Every step is **idempotent** — re-running skips work whose outputs already exist.
+- **`ev-flow doctor`** — read-only diagnostics: prints a `Check | Status | Details` table covering your Python version, the runtime dependencies, whether the data root is writable, and which sales-mix CSVs / NHTS parquets / per-region caches are present. It never mutates anything.
+
+```bash
+# (1) one-time setup — build the default bay_area / residential cache.
+#     Downloads ~80 MB of NHTS data and runs the pipeline (a few minutes).
+ev-flow bootstrap
+
+#     ...or pick regions / profile types explicitly:
+ev-flow bootstrap --regions bay_area la_basin --profile-types residential workplace
+
+# (2) diagnose your environment any time:
+ev-flow doctor            # add --verbose to also list passing rows
+                          # add --smoke to try generate_profiles(..., n=1)
+
+# (3) now the library API works:
+python -c "import pev_synth as ps; print(ps.generate_profiles('residential', n=10, region='bay_area'))"
+```
+
+`ev-flow doctor` exits non-zero if the environment is not usable yet (a missing runtime dependency, an unwritable data root, or a requested cache that has not been built) — handy in a `ev-flow doctor && ...` gate. Pass `--data-root PATH` to either subcommand to target a specific data directory (it sets `PEV_SYNTH_DATA_ROOT` for that run).
+
+> ACS PUMS calibration is **off by default** during bootstrap (`--skip-acs`, the default), because it needs a `CENSUS_API_KEY`. The built-in regions do not require it.
+
+If you installed from PyPI and already have a prebuilt data tree, you do **not** need `bootstrap` — just point `PEV_SYNTH_DATA_ROOT` at it (next section) and run `ev-flow doctor` to confirm.
+
+### Equivalent module invocations (dev checkout)
+
+`ev-flow bootstrap` is a thin, idempotent wrapper over the same module entry points you can also call directly in a `pip install -e .` dev checkout:
+
+```bash
+# (a) one-time NHTS 2017 download + processing (~80 MB ORNL zip).
+python -m pev_synth.nhts_loader
+
+# (b) build a cache for one (region, profile_type).
+python -m pev_synth.cache_regen one --region bay_area --profile-type residential
+```
 
 ## Data directory
 
@@ -28,29 +69,9 @@ Then set `PEV_SYNTH_DATA_ROOT` to point at your data tree — see the next secti
 export PEV_SYNTH_DATA_ROOT=/path/to/your/ev-flow-data
 ```
 
-The directory should contain the `pev/processed/<region>/<profile_type>_ev_synth/` layout that `python -m pev_synth.cache_regen one ...` writes. If `PEV_SYNTH_DATA_ROOT` is unset, the package falls back to `<repo_root>/data/` — only useful in a `pip install -e .` dev checkout where the `data/` tree sits next to `src/`.
+The directory should contain the `pev/processed/<region>/<profile_type>_ev_synth/` layout that `ev-flow bootstrap` (and `python -m pev_synth.cache_regen one ...`) writes. If `PEV_SYNTH_DATA_ROOT` is unset, the package falls back to `<repo_root>/data/` — only useful in a `pip install -e .` dev checkout where the `data/` tree sits next to `src/`.
 
-### First run / bootstrap (dev checkout)
-
-The cached fleet bundles are **not** in the repo and **not** in the wheel — you build them from NHTS 2017 microdata, which is also not bundled. For a fresh `pip install -e .` dev checkout the one-time sequence is:
-
-```bash
-# (a) one-time: download (~84 MB ORNL zip) + process NHTS 2017.
-#     Writes the California parquets and the national hhpub.csv/vehpub.csv
-#     to data/pev/raw/nhts2017/.
-python -m pev_synth.nhts_loader
-
-# (b) build a cache for the (region, profile_type) you want.
-#     Subcommands are `one`, `batch`, `audit`.
-python -m pev_synth.cache_regen one --region bay_area --profile-type residential
-
-# (c) now the library API works:
-python -c "import pev_synth as ps; print(ps.generate_profiles('residential', n=10, region='bay_area'))"
-```
-
-Step (a) runs once: the loader persists the national `hhpub.csv` / `vehpub.csv`, so non-CA regions (`boston`, `chicago`, `dallas_fort_worth`, `new_york_metro`, `seattle`) are then handled automatically by `cache_regen one` without re-downloading.
-
-Pip-installed (non-dev) users do not run the bootstrap — instead point `PEV_SYNTH_DATA_ROOT` at a prebuilt data tree as described above.
+The NHTS download step runs only once: the loader persists the national `hhpub.csv` / `vehpub.csv`, so non-CA regions (`boston`, `chicago`, `dallas_fort_worth`, `new_york_metro`, `seattle`) are then built without re-downloading.
 
 ## Quick start
 
