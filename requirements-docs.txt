@@ -17,6 +17,9 @@
 mkdocs-material~=9.7
 mkdocstrings[python]~=1.0
 mkdocstrings-python~=2.0
+# Lets mkdocstrings import + resolve type references (e.g. matplotlib Axes) in
+# the optional pev_synth.plotting submodule rendered on the API Reference page.
+matplotlib~=3.7
 # Lets mkdocstrings format rendered signatures (separate_signature: true in
 # mkdocs.yml). Without a formatter installed it silently falls back to the
 # raw signature; pinning ruff here keeps CI output identical to local builds.
