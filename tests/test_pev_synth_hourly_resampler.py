@@ -796,6 +796,94 @@ def test_build_plug_status_routes_to_region_path(tmp_path: Path) -> None:
     assert t.num_rows == 4 * 35_040
 
 
+def test_build_plug_status_out_dir_overrides_repo_root(tmp_path: Path) -> None:
+    """The explicit ``out_dir`` arg governs where the rasters are written.
+
+    Regression guard for the M7 data-root split-brain bug: when an
+    ``out_dir`` is supplied it MUST take precedence over ``repo_root`` for
+    the two plug-status parquets + ``meta.json``, so they co-locate with
+    ``sessions.parquet`` rather than being recomputed from ``repo_root``.
+    """
+    region = _bay_area_region()
+    data_root = tmp_path / "datatree"
+    out_dir = data_root / "pev" / "processed" / region.name / "workplace_ev_synth"
+    out_dir.mkdir(parents=True, exist_ok=True)
+    # Sessions deliberately live elsewhere (a sibling dir) to prove the
+    # rasters follow ``out_dir`` and not ``sessions_path.parent``.
+    sess_dir = tmp_path / "elsewhere"
+    sess_dir.mkdir(parents=True, exist_ok=True)
+    sessions = _make_workplace_sessions(n_evs=3, seed=20260520)
+    sessions_path = sess_dir / "sessions.parquet"
+    sessions.to_parquet(sessions_path, engine="pyarrow", index=False)
+
+    # A ``repo_root`` that, if (wrongly) used for output, would route the
+    # rasters somewhere OTHER than ``out_dir``.
+    repo_root = tmp_path / "repo"
+
+    out = hr.build_plug_status(
+        sessions_path=sessions_path,
+        region=region,
+        profile_type="workplace",
+        seed=20260520,
+        n_vehicles=3,
+        repo_root=repo_root,
+        out_dir=out_dir,
+    )
+
+    # Outputs land under out_dir ...
+    assert out["plug_status_15min"] == out_dir / "plug_status_15min.parquet"
+    assert out["plug_status_hourly"] == out_dir / "plug_status_hourly.parquet"
+    assert out["plug_status_15min"].is_file()
+    assert out["plug_status_hourly"].is_file()
+    # ... and NOT under the repo_root tree.
+    repo_tree = repo_root / "data" / "pev" / "processed"
+    assert not (repo_tree / region.name / "workplace_ev_synth"
+                / "plug_status_15min.parquet").exists()
+    assert not list(repo_root.rglob("plug_status_15min.parquet"))
+
+
+def test_cache_regen_m7_out_dir_honors_data_root_env(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """cache_regen resolves the M7 raster dir under PEV_SYNTH_DATA_ROOT.
+
+    Data-free path-resolution regression for the split-brain bug: when
+    ``PEV_SYNTH_DATA_ROOT`` is overridden but ``repo_root`` is left at the
+    package default (exactly what ``ev-flow bootstrap --data-root X`` does),
+    the directory ``cache_regen`` hands to ``build_plug_status`` must be
+    under the override root, NOT under ``<repo_root>/data``. Before the fix
+    M7 derived its own output from ``repo_root`` and ignored the env var.
+    """
+    from pev_synth import cache_regen as cr
+    from pev_synth._paths import repo_root as _repo_root_fn
+
+    data_root = tmp_path / "custom_data_root"
+    monkeypatch.setenv("PEV_SYNTH_DATA_ROOT", str(data_root))
+
+    pkg_repo_root = _repo_root_fn()  # the canonical default cache_regen uses
+
+    # This is the exact call cache_regen.regenerate_cache makes to derive
+    # the directory it now passes as build_plug_status(out_dir=...).
+    out_dir = cr._out_dir(pkg_repo_root, "bay_area", "residential")
+
+    expected = (
+        data_root / "pev" / "processed" / "bay_area" / "residential_ev_synth"
+    )
+    assert out_dir == expected, (
+        f"M7 out_dir {out_dir} should resolve under PEV_SYNTH_DATA_ROOT "
+        f"({data_root}), not the repo default"
+    )
+    # Guard against the regression: the override dir must not collapse back
+    # onto the repo-default data tree.
+    assert pkg_repo_root not in out_dir.parents
+
+    # Replicate layout (r_total > 1) is preserved under the override root.
+    out_dir_rep = cr._out_dir(
+        pkg_repo_root, "bay_area", "residential", replicate_id=2, r_total=4
+    )
+    assert out_dir_rep == expected / "replicates" / "r2"
+
+
 def test_build_plug_status_workplace_plug_rate_in_band(tmp_path: Path) -> None:
     """Workplace plug rate falls in the [10 %, 30 %] band per criterion 8.
 
