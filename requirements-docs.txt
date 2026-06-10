@@ -1,0 +1,23 @@
+# Documentation toolchain for the ev-flow MkDocs site (F9/F10/F11).
+#
+# These deps are NOT part of the published wheel/sdist (the package only ships
+# src/pev_synth/ — see pyproject.toml [tool.hatch.build]). They live here, not
+# in pyproject's optional-dependencies, so the docs build can install them
+# independently of the package's runtime/dev extras.
+#
+# Install:  pip install -r requirements-docs.txt
+# Build:    mkdocs build --strict
+# Serve:    mkdocs serve
+#
+# Pinned with compatible-release (~=) operators so patch/security updates flow
+# in while the API the site relies on stays stable. Latest verified versions
+# as of June 2026: mkdocs-material 9.7.6, mkdocstrings 1.0.4,
+# mkdocstrings-python 2.0.4 (mkdocs 1.6.1 comes transitively via the theme).
+
+mkdocs-material~=9.7
+mkdocstrings[python]~=1.0
+mkdocstrings-python~=2.0
+# Lets mkdocstrings format rendered signatures (separate_signature: true in
+# mkdocs.yml). Without a formatter installed it silently falls back to the
+# raw signature; pinning ruff here keeps CI output identical to local builds.
+ruff~=0.5
