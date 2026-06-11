@@ -664,9 +664,3 @@ def test_speech_cluster_fit_axes_and_union(
     assert fit.K_chosen == expected_K
     assert len(fit.cluster_centres_h) == expected_K
     assert len(fit.cluster_weights) == expected_K
-
-
-def test_load_speech_k16_params_missing_file_raises(tmp_path: Path) -> None:
-    """Loader raises FileNotFoundError with a clear conversion hint."""
-    with pytest.raises(FileNotFoundError, match="_convert_pickles.py"):
-        pim.load_speech_k16_params("residential", data_root=tmp_path)

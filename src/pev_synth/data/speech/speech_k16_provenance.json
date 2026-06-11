@@ -1,0 +1,250 @@
+{
+  "schema_version": "v3.0",
+  "dataset_url": "https://data.mendeley.com/datasets/gvk34mybtb/1",
+  "dataset_doi": "10.17632/gvk34mybtb.1",
+  "dataset_zip_url_template": "https://data.mendeley.com/public-api/zip/gvk34mybtb/download/1",
+  "license": "CC-BY-4.0",
+  "license_url": "http://creativecommons.org/licenses/by/4.0",
+  "citation": "Powell, S.; Cezar, G.V.; Rajagopal, R. (2022) Scalable Probabilistic Estimates of Electric Vehicle Charging Given Observed Driver Behavior. Applied Energy 309, doi:10.1016/j.apenergy.2021.118382",
+  "code_repo": "https://github.com/SiobhanPowell/speech",
+  "code_repo_license": "BSD-2-Clause",
+  "retrieval_timestamp_utc": "2026-05-30T01:18:17.501820+00:00",
+  "retrieved_via": "Mendeley public download-all zip endpoint (anonymous, no token).",
+  "downloaded_zip": {
+    "name": "gvk34mybtb-1.zip",
+    "size_bytes": 1139818,
+    "sha256": "1a03b794195bc390b9b5f7304e3cd959f950106e43070c9c761dad4305e117d9"
+  },
+  "files_consumed": [
+    {
+      "name": "pg.csv",
+      "size_bytes": 327,
+      "sha256": "63b5dbe2ddc04fcf59f879e84efcdc38da78a8f484afc7dcf236d11e05badb10"
+    },
+    {
+      "name": "weekday_home_0.p",
+      "size_bytes": 2952,
+      "sha256": "30b1fe930a10b799eff6ac2f2c9647be9b393212498ed0b555eebd068704b611"
+    },
+    {
+      "name": "weekday_home_1.p",
+      "size_bytes": 2208,
+      "sha256": "ad8d6b0bc7f2af276728c5a717b23324e7776fa0402da595ea9b5b20671efb3f"
+    },
+    {
+      "name": "weekday_home_11.p",
+      "size_bytes": 2208,
+      "sha256": "cc63240cfede57dcf01e5f1c2e7b3c942ecc84d73d3b3e54152b0f43efbd4c8f"
+    },
+    {
+      "name": "weekday_home_12.p",
+      "size_bytes": 1960,
+      "sha256": "58cb07853763a72f8603fa418242c5d58eb91b032a9f31e1734989ebab2716c8"
+    },
+    {
+      "name": "weekday_home_13.p",
+      "size_bytes": 2952,
+      "sha256": "d8c179e5dd5c6c2b64ceaf52f437f2b1f07ad38cfc37a2cb066a8d90b5a01a36"
+    },
+    {
+      "name": "weekday_home_2.p",
+      "size_bytes": 2952,
+      "sha256": "4e541d82be102c8a07cd41cc432c50b760df1b316aa53d6c64ab2d6f8df07001"
+    },
+    {
+      "name": "weekday_home_3.p",
+      "size_bytes": 2952,
+      "sha256": "7be4c2812f06856299f192006f8227077fe2c5decbd1c78eb3f3ff9ea3d04912"
+    },
+    {
+      "name": "weekday_home_4.p",
+      "size_bytes": 2952,
+      "sha256": "28b0af441cb5d4fa113bdf474cff199a3836f8ecb6bcc7a67250da04ee610503"
+    },
+    {
+      "name": "weekday_home_6.p",
+      "size_bytes": 2456,
+      "sha256": "32cd4626ad1db3529145054f3be246eebb0e79da3455df8a3f2af845bc0bad61"
+    },
+    {
+      "name": "weekday_work_0.p",
+      "size_bytes": 2952,
+      "sha256": "d7e17eb0d988f6f4c1bede17562a27e46f58da1a8b9fd747eda93f8459820ec1"
+    },
+    {
+      "name": "weekday_work_1.p",
+      "size_bytes": 2952,
+      "sha256": "a0e9f0f9a4d84ee3d3751b8afdcf9585b8013bf88b3ae1f907e3ad073fb2de46"
+    },
+    {
+      "name": "weekday_work_10.p",
+      "size_bytes": 2952,
+      "sha256": "de38e58521f198fd80e98b53666d87cf6b5e0730b90e4d4b233d3dd3297f0243"
+    },
+    {
+      "name": "weekday_work_11.p",
+      "size_bytes": 2704,
+      "sha256": "6da99e7591732ee3c8772f7dbfc8efd18858a69f8c72816562cb7107b150d043"
+    },
+    {
+      "name": "weekday_work_12.p",
+      "size_bytes": 2704,
+      "sha256": "397a2db4e7ca07b5d9e352f1b1117dba659ade9f561b07b71f4530f9d9e3a33a"
+    },
+    {
+      "name": "weekday_work_13.p",
+      "size_bytes": 2952,
+      "sha256": "b2dd3e1564ef60ef00429b369a0eaefe2e61515d12df16176b98e5aaf54a41df"
+    },
+    {
+      "name": "weekday_work_15.p",
+      "size_bytes": 2952,
+      "sha256": "42677582302edf3a03e96d09b5604a3a29c67608caa1e7b0168eb4f2a648c7a2"
+    },
+    {
+      "name": "weekday_work_2.p",
+      "size_bytes": 2456,
+      "sha256": "f6e88fc3958b0e0caca655029c13344127c0dc2cd283824f8af9db3d5e59d890"
+    },
+    {
+      "name": "weekday_work_3.p",
+      "size_bytes": 2704,
+      "sha256": "5f45130748d579767ad7592a406c603f88080851e5308102f1e40f167a45ea77"
+    },
+    {
+      "name": "weekday_work_5.p",
+      "size_bytes": 2704,
+      "sha256": "ac04219923c90c06fe2da5cf2ab5a0a23f8cb2b36da53856bcaee41feb3d61df"
+    },
+    {
+      "name": "weekday_work_6.p",
+      "size_bytes": 2456,
+      "sha256": "01aa251a24135eae33a951d48c3a842fa6f36861c3abb408e9c30da4977436cc"
+    },
+    {
+      "name": "weekday_work_8.p",
+      "size_bytes": 2952,
+      "sha256": "9c1e0690f905615cbb37c558d27608128580b9410b1e2a69615f23960c70c1c9"
+    },
+    {
+      "name": "weekday_work_9.p",
+      "size_bytes": 2456,
+      "sha256": "0af60e670e8867f40db5fc63371e4a2fb2232bb69dbd076e11598593d0a49143"
+    },
+    {
+      "name": "weekend_home_0.p",
+      "size_bytes": 2952,
+      "sha256": "5fe13a6f1ed218410da93842d8b6a7be9c70d1ffb386b99e6748b88afa5a9ced"
+    },
+    {
+      "name": "weekend_home_1.p",
+      "size_bytes": 2208,
+      "sha256": "73493882782165641892f70f5791e2b794205f58fa62b52236d87c6ee358e33e"
+    },
+    {
+      "name": "weekend_home_11.p",
+      "size_bytes": 2208,
+      "sha256": "d6080f34dd3137b157018b85f0cebe868e9f81d054b06471a7be7e1faa277bf0"
+    },
+    {
+      "name": "weekend_home_13.p",
+      "size_bytes": 2952,
+      "sha256": "40c9e01d050049720befe60ffac1edc5e5e70b0273d47279052543b97d16e86e"
+    },
+    {
+      "name": "weekend_home_2.p",
+      "size_bytes": 2952,
+      "sha256": "6256a1d73c80c5cd7ca91cf177c8b471f50a81f13fce4a3c3db5d3f4de3ae46c"
+    },
+    {
+      "name": "weekend_home_3.p",
+      "size_bytes": 2952,
+      "sha256": "f27b5847754d3c766b6296633c2802c07420e3acd1e63ae4e5cc58a79c9f52dd"
+    },
+    {
+      "name": "weekend_home_4.p",
+      "size_bytes": 2952,
+      "sha256": "761219f0243a688e87498035aeeb87fc4ebe8788d0f1c06f9b024aa2e2814943"
+    },
+    {
+      "name": "weekend_home_6.p",
+      "size_bytes": 2456,
+      "sha256": "76d73932ff47351693521bf6ae1a5644390a372f4f2f3ea1488b4fbe34f0f521"
+    },
+    {
+      "name": "weekend_work_0.p",
+      "size_bytes": 2952,
+      "sha256": "4ccc603ccbcbdc1a6d2eaf2eada8f177d6715d8a9f63640f247be202aa41bb40"
+    },
+    {
+      "name": "weekend_work_1.p",
+      "size_bytes": 2952,
+      "sha256": "a0649c62640db77fe4bb3637a329c9cdb43643210d0764752760a97304811c10"
+    },
+    {
+      "name": "weekend_work_10.p",
+      "size_bytes": 2952,
+      "sha256": "6042471f1cb88d4e64711c7c565d7ae1bb7a0b0bba2b528329078ac760af73a1"
+    },
+    {
+      "name": "weekend_work_11.p",
+      "size_bytes": 2704,
+      "sha256": "b87edc15113e4e2c1451b77fed7e38ca88c732501ebeabd5cb64f3fdafe3b2f4"
+    },
+    {
+      "name": "weekend_work_12.p",
+      "size_bytes": 2704,
+      "sha256": "8170a8a5d443d45592f118fcea54d51fe21923eb1ab8690cdbd6787e3f7a4ba3"
+    },
+    {
+      "name": "weekend_work_15.p",
+      "size_bytes": 2952,
+      "sha256": "d9721a77fa8a255e12dd950aa0c0597d998b4637f3d96fc26916f8d594515bb9"
+    },
+    {
+      "name": "weekend_work_2.p",
+      "size_bytes": 2456,
+      "sha256": "01f201900ad6b0a480f169a5ddffcb2ddf7570028d922732315e5f29c143be98"
+    },
+    {
+      "name": "weekend_work_3.p",
+      "size_bytes": 2704,
+      "sha256": "5a23ea79d7abf4fda781b727f9270e1f7e1763c4d29872b2c95a64221283bc27"
+    },
+    {
+      "name": "weekend_work_5.p",
+      "size_bytes": 2704,
+      "sha256": "e9819a5a450c3fc664f27e2e53ebfadff60f5f1c0aaf096d8057d37c1b49d40f"
+    },
+    {
+      "name": "weekend_work_6.p",
+      "size_bytes": 2456,
+      "sha256": "50a5c2828093d0535fdca08f4826722cf759a0b0000be5de2dbaedfb7d085d6e"
+    },
+    {
+      "name": "weekend_work_8.p",
+      "size_bytes": 2952,
+      "sha256": "9d9b2862e7b855abbc53985d0902d69fb5d71bb5ca615858d69b7ecb3e244c7a"
+    },
+    {
+      "name": "weekend_work_9.p",
+      "size_bytes": 2456,
+      "sha256": "fc81fcb9e4100721682a30cabdfd831216434fe36fa8ec84d32ba47ca96c3b30"
+    }
+  ],
+  "conversion_script": "data/pev/raw/speech/_convert_pickles.py",
+  "sklearn_version_at_conversion": "1.8.0",
+  "sklearn_version_at_pickling": "0.22.2.post1",
+  "axes_note": "SPEECh native axes are [start_time (sec-of-day, 0..86400), energy (kWh), duration (sec, clipped 7d)]. ev-flow JSON preserves these natively under axes=['start_time_s_LT','energy_kwh','duration_s']. Consumer (plug_in_model.py) converts start_time to hours-LT (divide by 3600).",
+  "ev_flow_consumed_segments": [
+    "home",
+    "work"
+  ],
+  "ev_flow_skipped_segments": [
+    "mud",
+    "other_slow",
+    "other_fast"
+  ],
+  "skipped_rationale": "v3.0 only models residential (home) and workplace (work) plug-in behavior. Multi-unit-dwelling (mud) is conflated into residential via NHTS housing-type weights (separate concern, not via this dataset). Public/other charging is v3.2+ scope.",
+  "missing_groups_note": "Not all (segment, day_type, group_id) combos exist in the dataset \u2014 some driver groups never charge at a segment. JSON consumer must skip absent group_ids and reweight P(G) over present groups when sampling the marginal for that segment."
+}
