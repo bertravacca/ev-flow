@@ -8,11 +8,14 @@ either U.S. Government public-domain or carries no binding attribution clause,
 but we credit it as a matter of scientific good practice).
 
 `ev-flow`'s code is built to consume the SPEECh Original Model — its loader,
-schema, and CC-BY citations live in `pev_synth.plug_in_model`. The SPEECh-derived
-JSON is built by the user from the upstream Mendeley source and is **not**
-redistributed in the wheel, but SPEECh is the load-bearing model dependency, so
-its CC-BY-4.0 notice is reproduced here (and in the source). This file is shipped
-in the sdist.
+schema, and CC-BY citations live in `pev_synth.plug_in_model`. A SPEECh-derived
+K=16 parameter set (start-time marginals + group priors, `speech_k16_*.json`) is
+**redistributed in the wheel and sdist** under `pev_synth/data/speech/`, which
+CC-BY-4.0 permits with attribution — the required notice is reproduced below and
+in the source. Shipping it lets a fresh `pip install ev-flow` build without
+obtaining the upstream Mendeley source. (A maintainer's locally-derived copy
+under `data/pev/raw/speech/`, if present, still takes precedence.) This
+ATTRIBUTION file is shipped in the sdist.
 
 ---
 

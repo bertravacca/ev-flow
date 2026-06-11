@@ -36,8 +36,10 @@ Thumbs.db
 .env.*
 !.env.example
 
-# Local data caches (if any are dropped here during development)
-data/
+# Local data caches (if any are dropped here during development). Anchored to
+# the repo root with a leading slash so the package's own bundled data dir
+# (src/pev_synth/data/ — ships the SPEECh K=16 JSONs) is NOT ignored.
+/data/
 results/
 
 # In-progress scientific-publication work — separate effort with its own
