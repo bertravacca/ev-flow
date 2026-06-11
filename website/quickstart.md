@@ -21,9 +21,9 @@ and its runtime dependencies (numpy, pandas, pyarrow, scikit-learn, scipy).
 
 ## 2. Bootstrap the data cache
 
-The wheel ships **only** the Python code. It does **not** bundle the cached
-fleet data — that is built locally from NHTS 2017 microdata the first time you
-run ev-flow. Bootstrap it once:
+The wheel ships the Python code plus the small SPEECh K=16 parameters. It does
+**not** bundle the cached fleet data — that is built locally from NHTS 2017
+microdata the first time you run ev-flow. Bootstrap it once:
 
 ```bash
 ev-flow bootstrap

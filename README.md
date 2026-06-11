@@ -12,13 +12,15 @@ Synthetic plug-in electric vehicle (PEV) charging dataset pipeline and library A
 
 `ev-flow` generates realistic, fleet-scale charging behavior for residential and workplace EVs, grounded in the National Household Travel Survey (NHTS) and a regional sales-mix model. It exposes both a low-level pipeline (NHTS loading, donor matching, travel-week building, plug-in modeling, state-of-charge trajectory, hourly rasterisation) and a clean `Fleet` / `Profile` library API for downstream studies.
 
+[![Open quickstart in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/bertravacca/ev-flow/blob/main/notebooks/ev_flow_quickstart.ipynb) — try the quickstart in your browser, no local install needed.
+
 ## Install
 
 ```bash
 pip install ev-flow
 ```
 
-The wheel ships only the Python package — no cached fleet bundles and no NHTS microdata. After installing, run the one-time **First run** below to build them (or point `PEV_SYNTH_DATA_ROOT` at a prebuilt data tree). Until then `generate_profiles(...)` raises `FileNotFoundError`.
+The wheel ships the Python package and the small bundled SPEECh K=16 parameters — but no cached fleet bundles and no NHTS microdata. After installing, run the one-time **First run** below to build them (or point `PEV_SYNTH_DATA_ROOT` at a prebuilt data tree). Until then `generate_profiles(...)` raises `FileNotFoundError`.
 
 ## First run
 
