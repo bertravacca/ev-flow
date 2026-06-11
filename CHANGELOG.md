@@ -6,6 +6,12 @@ All notable changes to **ev-flow** are documented here. This project follows
 ## [Unreleased]
 
 ### Added
+- The SPEECh K=16 parameter JSONs (start-time marginals + group priors) are now
+  **bundled in the wheel and sdist** under `pev_synth/data/speech/`
+  (CC-BY-4.0 — see ATTRIBUTION.md). As a result `ev-flow bootstrap` builds on a
+  fresh `pip install` without obtaining the upstream Mendeley source; previously
+  the M5 plug-in step raised `FileNotFoundError`. A maintainer's locally-derived
+  copy under `data/pev/raw/speech/` still takes precedence.
 - Static type-checking with **mypy** is now a required CI gate (F27). The
   public API surface and lighter helpers/loaders are checked under
   `mypy --strict`; the heavy internal pipeline modules are relaxed for now as

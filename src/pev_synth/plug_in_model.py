@@ -606,11 +606,27 @@ class SpeechParams:
     source_license: str = ""
 
 
-def _resolve_speech_json_path(profile_type: str, data_root: Path | None) -> Path:
-    """Resolve ``speech_k16_<profile_type>.json`` under ``data/pev/raw/speech``.
+#: Directory of the SPEECh K=16 JSONs bundled as package data inside the wheel
+#: (``src/pev_synth/data/speech/``). Shipping them (~180 kB, CC-BY-4.0 — see
+#: ATTRIBUTION.md) lets a fresh ``pip install ev-flow`` build without obtaining
+#: the Mendeley source data. A locally-derived copy under
+#: ``data/pev/raw/speech/`` still takes precedence for maintainer/dev work.
+_BUNDLED_SPEECH_DIR: Final[Path] = Path(__file__).resolve().parent / "data" / "speech"
 
-    If ``data_root`` is None, attempt ``repo_root()`` resolution. The
-    function does not check existence; callers must.
+
+def _bundled_speech_json_path(profile_type: str) -> Path:
+    """Path to the ``speech_k16_<profile_type>.json`` shipped as package data."""
+    return _BUNDLED_SPEECH_DIR / f"speech_k16_{profile_type}.json"
+
+
+def _resolve_speech_json_path(profile_type: str, data_root: Path | None) -> Path:
+    """Resolve ``speech_k16_<profile_type>.json``.
+
+    Prefers a locally-derived JSON under ``data/pev/raw/speech/`` (relative to
+    ``data_root`` if given, else ``repo_root()``) so a maintainer's freshly
+    converted parameters win; otherwise falls back to the copy bundled in the
+    wheel. The returned path exists only if one of those sources is present —
+    callers must still check ``is_file()``.
     """
     if profile_type == "residential":
         rel = SPEECH_K16_RESIDENTIAL_REL
@@ -621,10 +637,11 @@ def _resolve_speech_json_path(profile_type: str, data_root: Path | None) -> Path
             f"profile_type must be 'residential' or 'workplace'; got {profile_type!r}"
         )
     if data_root is not None:
-        return Path(data_root) / rel
-    # Resolve via the repo helper.
-    from ._paths import repo_root as _repo_root_fn  # noqa: PLC0415
-    return _repo_root_fn() / rel
+        local = Path(data_root) / rel
+    else:
+        from ._paths import repo_root as _repo_root_fn  # noqa: PLC0415
+        local = _repo_root_fn() / rel
+    return local if local.is_file() else _bundled_speech_json_path(profile_type)
 
 
 def _speech_group_arrays(
@@ -708,9 +725,10 @@ def load_speech_k16_params(
     json_path = _resolve_speech_json_path(profile_type, data_root)
     if not json_path.is_file():
         raise FileNotFoundError(
-            f"SPEECh K=16 parameters not found at {json_path!s}. "
-            f"Convert the Mendeley pickles first via "
-            f"``data/pev/raw/speech/_convert_pickles.py`` (see "
+            f"SPEECh K=16 parameters not found at {json_path!s}. These JSONs "
+            f"normally ship bundled with the package; seeing this usually means "
+            f"a broken install. From a source checkout you can instead derive "
+            f"them via ``data/pev/raw/speech/_convert_pickles.py`` (see "
             f"docs/v3/modeling/k16_speech.md)."
         )
     with json_path.open("r", encoding="utf-8") as f:
