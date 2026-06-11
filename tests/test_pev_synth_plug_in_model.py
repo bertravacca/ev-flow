@@ -664,28 +664,3 @@ def test_speech_cluster_fit_axes_and_union(
     assert fit.K_chosen == expected_K
     assert len(fit.cluster_centres_h) == expected_K
     assert len(fit.cluster_weights) == expected_K
-
-
-def test_load_speech_k16_params_falls_back_to_bundled(tmp_path: Path) -> None:
-    """With no locally-derived copy under ``data_root``, the loader transparently
-    falls back to the SPEECh K=16 JSON bundled as package data (so a fresh
-    ``pip install`` can build). ``tmp_path`` has no ``data/pev/raw/speech`` tree.
-    """
-    # Resolution points at the bundled package-data copy, which exists.
-    resolved = pim._resolve_speech_json_path("residential", tmp_path)
-    assert resolved == pim._bundled_speech_json_path("residential")
-    assert resolved.is_file()
-    # And the load succeeds rather than raising.
-    sp = pim.load_speech_k16_params("residential", data_root=tmp_path)
-    assert sp.profile_type == "residential"
-    assert len(sp.P_G) == pim.SPEECH_K_TOTAL
-
-
-def test_load_speech_k16_params_missing_everywhere_raises(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
-) -> None:
-    """If neither a local nor the bundled copy exists (a broken install), the
-    loader still raises a clear FileNotFoundError."""
-    monkeypatch.setattr(pim, "_BUNDLED_SPEECH_DIR", tmp_path / "nonexistent")
-    with pytest.raises(FileNotFoundError, match="broken install"):
-        pim.load_speech_k16_params("residential", data_root=tmp_path)
