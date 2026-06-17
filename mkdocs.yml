@@ -16,6 +16,8 @@ docs_dir: website
 
 theme:
   name: material
+  custom_dir: overrides   # OG/Twitter meta for the social card (F34)
+  favicon: assets/favicon.png
   features:
     - navigation.instant
     - navigation.tracking
