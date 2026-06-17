@@ -88,6 +88,8 @@ markdown_extensions:
 nav:
   - Home: index.md
   - Quickstart: quickstart.md
+  - When to use: when-to-use.md
+  - Comparison: comparison.md
   - Tutorials:
       - Residential aggregate load: tutorials/residential-load.md
       - Comparing regions: tutorials/regional-comparison.md
