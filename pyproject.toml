@@ -52,6 +52,11 @@ dev = [
     "pytest-cov>=5",
     "ruff>=0.5",
     "mypy>=1.10",
+    # numpy 2.5 ships PEP 695 `type` statements in its stubs, which mypy rejects
+    # under our py3.10 type target ("Type statement is only supported in Python
+    # 3.12 and greater"). Cap numpy for the dev/type-check env only; runtime
+    # `dependencies` above stay unconstrained for end users.
+    "numpy<2.5",
     "build>=1.2",
     "twine>=5",
     "bandit>=1.7",
