@@ -51,7 +51,7 @@ dev = [
     "pytest>=8",
     "pytest-cov>=5",
     "ruff>=0.5",
-    "mypy>=1.10",
+    "mypy>=1.10,<2.1",  # 2.1.0 rejects numpy>=2.5 stubs under the py3.10 type target
     "build>=1.2",
     "twine>=5",
     "bandit>=1.7",
